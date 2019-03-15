@@ -5,6 +5,36 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+
+<script type="text/javascript">
+function Login(){
+	var username=$("#username").textbox("getValue");
+	var password=$("#password").textbox("getValue");
+	$.ajax({
+		url:"User/queryAll",
+		type:"post",
+		dataType:"json",
+		success:function(result){
+			for(var i=0;i<result.length;i++){
+			     var a=result[i];
+			     if(username==a.username&&password==a.password){
+			    	 alert("登录成功");
+			    	 location.href="success.jsp";
+			    	 return;
+			     }else {
+			    	 alert("登录失败");
+			    	 location.href="login.jsp";
+			    	 return;
+			     }
+		}
+			}
+	})
+}
+
+
+</script>
+
+
 </head>
 
  <meta charset="utf-8">
