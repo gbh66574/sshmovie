@@ -2,7 +2,6 @@ package com.entor.service;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 
 public interface BaseService<T> {
 	public void add(T t);

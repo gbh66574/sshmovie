@@ -1,21 +1,31 @@
-(function() {
-    "use strict";
 
-    // custom scrollbar
+jQuery(document).ready(function() {
 
-    $("html").niceScroll({styler:"fb",cursorcolor:"#000", cursorwidth: '4', cursorborderradius: '10px', background: '#ccc', spacebarenabled:false, cursorborder: '0',  zindex: '1000'});
+    $('.page-container form').submit(function(){
+        var username = $(this).find('.username').val();
+        var password = $(this).find('.password').val();
+        if(username == '') {
+            $(this).find('.error').fadeOut('fast', function(){
+                $(this).css('top', '27px');
+            });
+            $(this).find('.error').fadeIn('fast', function(){
+                $(this).parent().find('.username').focus();
+            });
+            return false;
+        }
+        if(password == '') {
+            $(this).find('.error').fadeOut('fast', function(){
+                $(this).css('top', '96px');
+            });
+            $(this).find('.error').fadeIn('fast', function(){
+                $(this).parent().find('.password').focus();
+            });
+            return false;
+        }
+    });
 
-    $(".scrollbar1").niceScroll({styler:"fb",cursorcolor:"#000", cursorwidth: '4', cursorborderradius: '0',autohidemode: 'false', background: '#ccc', spacebarenabled:false, cursorborder: '0'});
+    $('.page-container form .username, .page-container form .password').keyup(function(){
+        $(this).parent().find('.error').fadeOut('fast');
+    });
 
-	
-	
-    $(".scrollbar1").getNiceScroll();
-    if ($('body').hasClass('scrollbar1-collapsed')) {
-        $(".scrollbar1").getNiceScroll().hide();
-    }
-
-})(jQuery);
-
-                     
-     
-  
+});

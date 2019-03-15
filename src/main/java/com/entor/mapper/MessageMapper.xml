@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="Student">
+<mapper namespace="Message">
 
-	<insert id="add" parameterType="Student">
-		insert into student(name,username,password,sex,age,birthday,createTime)
+	<insert id="add" parameterType="Message">
+		insert into Message(name,username,password,sex,age,birthday,createTime)
 		values(#{name},#{username},#{password},#{sex},#{age},#{birthday},#{createTime})
 	</insert>
 	<insert id="addMore">
-	insert into student(name,username,password,sex,age,birthday,createTime)values
+	insert into Message(name,username,password,sex,age,birthday,createTime)values
 	<foreach collection="list" item="s" separator=",">
 	(#{s.name},#{s.username},#{s.password},#{s.sex},#{s.age},#{s.birthday},#{s.createTime})
 	</foreach>
 	</insert>
-	<update id="update" parameterType="Student">
-		update student set
+	<update id="update" parameterType="Message">
+		update Message set
 		name=#{name},
 		username=#{username},
 		password=#{password},
@@ -24,26 +24,26 @@
 		createTime=#{createTime}
 		where id=#{id}
 	</update>
-	<select id="queryById" parameterType="int" resultType="Student">
-	select * from student where id=#{id}
+	<select id="queryById" parameterType="int" resultType="Message">
+	select * from Message where id=#{id}
 	</select>
-	<select id="queryAll"  resultType="Student">
-	select * from student where id&lt;100
+	<select id="queryAll"  resultType="Message">
+	select * from Message where id&lt;100
 	</select>
-	<select id="queryByPage" parameterType="map" resultType="Student">
-	select * from student limit #{start},#{pageSize}
+	<select id="queryByPage" parameterType="map" resultType="Message">
+	select * from Message limit #{start},#{pageSize}
 	</select>
-	<select id="queryByUsername"   resultType="Student">
-	select * from student where username like #{username}
+	<select id="queryByUsername"   resultType="Message">
+	select * from Message where username like #{username}
 	</select>
 	<select id="getTotals" resultType="int">
-	select count(*) from student
+	select count(*) from Message
 	</select>
 	<delete id="deleteById">
-	delete from student where id=#{id}
+	delete from Message where id=#{id}
 	</delete>
 	<delete id="deleteMore">
-	delete from student where id in
+	delete from Message where id in
 	<foreach collection="array" open="(" close=")" separator="," item="id">
 	#{id}
 	</foreach>

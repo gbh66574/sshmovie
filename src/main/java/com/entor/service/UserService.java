@@ -1,12 +1,11 @@
-package com.entor.dao;
-
-
+package com.entor.service;
 
 
 import com.entor.entity.User;
 
-public interface UserDao extends BaseDao<User> {
+public interface UserService extends BaseService<User> {
 	public User login(String username,String password);
 
-
+	
+	
 }

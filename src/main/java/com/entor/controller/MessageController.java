@@ -25,25 +25,25 @@ import com.alibaba.fastjson.JSONObject;
 import com.entor.dao.MessageDao;
 
 
-import com.entor.entity.Student;
+import com.entor.entity.Message;
 
-import com.entor.service.StudentService;
+import com.entor.service.MessageService;
 
 @Controller
-@RequestMapping("/Student")
-public class StudentController {
+@RequestMapping("/Message")
+public class MessageController {
 
 	@Resource
-	private StudentService studentService;
+	private MessageService MessageService;
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 	@RequestMapping("/add")
-	public void add(Student student) {
+	public void add(Message Message) {
 		JSONObject jo = new JSONObject();
 		PrintWriter out = null;
 		try {
 			out = response.getWriter();
-			studentService.add(student);
+			MessageService.add(Message);
 			jo.put("state", 0);
 			jo.put("msg", "新增成功");
 		}catch(Exception e) {
@@ -63,7 +63,7 @@ public class StudentController {
 		PrintWriter out = null;
 		try {
 			out = response.getWriter();
-			studentService.deleteMore(Student.class,ids);
+			MessageService.deleteMore(Message.class,ids);
 			jo.put("state", 0);
 			jo.put("msg", "删除成功");
 		}catch(Exception e) {
@@ -78,13 +78,13 @@ public class StudentController {
 		}
 	}
 	@RequestMapping("/update")
-	public void update(Student student) {
+	public void update(Message Message) {
 		JSONObject jo = new JSONObject();
 		PrintWriter out = null;
 		try {
 			out = response.getWriter();
 
-			studentService.update(student);
+			MessageService.update(Message);
 			jo.put("state", 0);
 			jo.put("msg", "修改成功");
 		}catch(Exception e) {
@@ -102,7 +102,7 @@ public class StudentController {
 	public void queryByPage(String page) {
 		
 		String qname = request.getParameter("qname");
-		String qStudentname = request.getParameter("qStudentname");
+		String qMessagename = request.getParameter("qMessagename");
 		String qsex = request.getParameter("qsex");
 		String qbeginDate = request.getParameter("qbeginDate");
 		String qendDate = request.getParameter("qendDate");
@@ -113,8 +113,8 @@ public class StudentController {
 		if(qname!=null&&!qname.equals("")&&!qname.equalsIgnoreCase("null")){
 			condition += " and name like '%"+qname+"%'";
 		}
-		if(qStudentname!=null&&!qStudentname.equals("")&&!qname.equalsIgnoreCase("null")){
-			condition += " and Studentname like '%"+qStudentname+"%'";
+		if(qMessagename!=null&&!qMessagename.equals("")&&!qname.equalsIgnoreCase("null")){
+			condition += " and Messagename like '%"+qMessagename+"%'";
 		}
 		if(qsex!=null&&!qsex.equals("")&&!qsex.equals("-1")&&!qname.equalsIgnoreCase("null")){
 			condition += " and sex = "+qsex;
@@ -129,7 +129,7 @@ public class StudentController {
 		//瑜版挸澧犳い锟?
 		int sp = 1;
 		//閹槒顔囪ぐ鏇熸殶
-		int totals = studentService.getTotals(Student.class);
+		int totals = MessageService.getTotals(Message.class);
 		//濮ｅ繘銆夌拋鏉跨秿閺侊拷
 		int pageSize = Integer.parseInt(rows);
 		//閹銆夐弫锟?
@@ -148,7 +148,7 @@ public class StudentController {
 		if(sp<1){
 			sp = 1;
 		}
-		List<Student> list =studentService.queryByPage(Student.class, sp, pageSize);
+		List<Message> list =MessageService.queryByPage(Message.class, sp, pageSize);
 		try {
 			PrintWriter out = response.getWriter();
 			JSONObject jo = new JSONObject();
@@ -166,14 +166,14 @@ public class StudentController {
 	}
 //	@RequestMapping("/saveRole")
 //	public void saveRole(String uids,String rids) {
-//		List<StudentRole> list = new ArrayList<>();
-//		StudentRoleDao.deleteStudentRolesByUids(uids);
+//		List<MessageRole> list = new ArrayList<>();
+//		MessageRoleDao.deleteMessageRolesByUids(uids);
 //		for(String uid:uids.split(",")) {
 //			for(String rid:rids.split(",")) {
-//				StudentRole StudentRole = new StudentRole();
-//				StudentRole.setUid(Integer.parseInt(uid));
-//				StudentRole.setRid(Integer.parseInt(rid));
-//				list.add(StudentRole);
+//				MessageRole MessageRole = new MessageRole();
+//				MessageRole.setUid(Integer.parseInt(uid));
+//				MessageRole.setRid(Integer.parseInt(rid));
+//				list.add(MessageRole);
 //			}
 //		}JSONObject jo = new JSONObject();
 //		PrintWriter out = null;
