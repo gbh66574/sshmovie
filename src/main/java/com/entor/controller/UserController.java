@@ -10,14 +10,21 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -33,8 +40,6 @@ public class UserController {
 
 	@Resource
 	private UserService UserService;
-	
-	private User User;
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 	@RequestMapping("/add")
@@ -164,77 +169,16 @@ public class UserController {
 			e.printStackTrace();
 		}
 	}
-	/*@RequestMapping("/login")
-	public String login()throws Exception{
-		User s = UserService.login(User.getName(), User.getPassword());
-		if(s!=null) {
-			request.getSession().setAttribute("User", s);
-			return "success.jsp";
-		}else {
-			request.setAttribute("msg", "��¼ʧ��");
-			return "login.jsp";
-		}
-	}*/
-//	@RequestMapping("/saveRole")
-//	public void saveRole(String uids,String rids) {
-//		List<UserRole> list = new ArrayList<>();
-//		UserRoleDao.deleteUserRolesByUids(uids);
-//		for(String uid:uids.split(",")) {
-//			for(String rid:rids.split(",")) {
-//				UserRole UserRole = new UserRole();
-//				UserRole.setUid(Integer.parseInt(uid));
-//				UserRole.setRid(Integer.parseInt(rid));
-//				list.add(UserRole);
-//			}
-//		}JSONObject jo = new JSONObject();
-//		PrintWriter out = null;
-//		try {
-//			out = response.getWriter();
-//			addMore(list);
-//			jo.put("state", 0);
-//			jo.put("msg", "分配成功");
-//		}catch(Exception e) {
-//			jo.put("state", -1);
-//			jo.put("msg", "分配失败"+e.getMessage());
-//		}finally {
-//			String str = JSON.toJSONString(jo);
-//			System.out.println(str);
-//			out.write(str);
-//			out.flush();
-//			out.close();
-//		}
-//		
-//	}
-//	@RequestMapping("/getOwnerRoles")
-//	public void getOwnerRoles(String uids) {
-//		try {
-//			PrintWriter out = response.getWriter();
-//			RoleDao dao = new RoleDaoImpl();
-//			List<Role> list = dao.queryAllRolesByUids(uids);
-//			String str = JSON.toJSONString(list);
-//			System.out.println(str);
-//			out.write(str);
-//			out.flush();
-//			out.close();
-//		}catch(Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
-	/*@RequestMapping("/queryAll")
-	public void queryAll() {
-		List<User>list=UserService.queryAll(User.class);
-		try {
-			PrintWriter out = response.getWriter();
-			String json = JSON.toJSONString(list);
-			System.out.println(json);
-			out.write(json);
-			out.flush();
-			out.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}*/
+	@RequestMapping(value="/login")
+    public String login(User user,Model model) throws Exception {
+        user=UserService.checkLogin(user.getUsername(), user.getPassword());
+        if(user!=null){
+            model.addAttribute(user);
+            return "index";            
+        }
+        return "login";
+    }
+
 	/**
 	 * 澶勭悊鍙傛暟涓烘棩鏈熸牸寮�
 	 * @param binder

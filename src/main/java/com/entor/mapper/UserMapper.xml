@@ -24,6 +24,7 @@
 	<select id="queryAll"  resultType="User">
 	select * from User where id&lt;100
 	</select>
+	 
 	<select id="login" parameterType="map" resultType="User">
 	select * from User where username=#{username} and password=#{password}
 	</select>

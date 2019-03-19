@@ -35,6 +35,7 @@
 		<!--指定包中的实体类别名 -->
 		<property name="typeAliasesPackage" value="com.entor.entity" />
 	</bean>
+	
 	<!-- 配置事务管理 -->
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
