@@ -2,6 +2,10 @@ package com.entor.entity;
 
 import java.sql.Timestamp;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
+
+
 public class User {
 private int id;
 private String username;
@@ -11,6 +15,7 @@ private int sex;
 private String dress;
 private String phone;
 private String qq;
+@JSONField(format="yyyy-MM-dd HH:mm:ss")
 private Timestamp createTime;
 public int getId() {
 	return id;

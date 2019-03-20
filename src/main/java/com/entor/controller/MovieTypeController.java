@@ -45,10 +45,10 @@ public class MovieTypeController {
 			out = response.getWriter();
 			MovieTypeService.add(MovieType);
 			jo.put("state", 0);
-			jo.put("msg", "�����ɹ�");
+			jo.put("msg", "新增成功");
 		}catch(Exception e) {
 			jo.put("state", -1);
-			jo.put("msg", "����ʧ��"+e.getMessage());
+			jo.put("msg", "新增失败"+e.getMessage());
 		}finally {
 			String str = JSON.toJSONString(jo);
 			System.out.println(str);
@@ -65,10 +65,10 @@ public class MovieTypeController {
 			out = response.getWriter();
 			MovieTypeService.deleteMore(MovieType.class,ids);
 			jo.put("state", 0);
-			jo.put("msg", "ɾ���ɹ�");
+			jo.put("msg", "删除成功");
 		}catch(Exception e) {
 			jo.put("state", -1);
-			jo.put("msg", "ɾ��ʧ��"+e.getMessage());
+			jo.put("msg", "删除失败"+e.getMessage());
 		}finally {
 			String str = JSON.toJSONString(jo);
 			System.out.println(str);
@@ -86,10 +86,10 @@ public class MovieTypeController {
 
 			MovieTypeService.update(MovieType);
 			jo.put("state", 0);
-			jo.put("msg", "�޸ĳɹ�");
+			jo.put("msg", "修改成功");
 		}catch(Exception e) {
 			jo.put("state", -1);
-			jo.put("msg", "�޸�ʧ��"+e.getMessage());
+			jo.put("msg", "修改失败"+e.getMessage());
 		}finally {
 			String str = JSON.toJSONString(jo);
 			System.out.println(str);
@@ -106,9 +106,7 @@ public class MovieTypeController {
 		String qsex = request.getParameter("qsex");
 		String qbeginDate = request.getParameter("qbeginDate");
 		String qendDate = request.getParameter("qendDate");
-		//鑾峰彇姣忛�?�鏄剧ず璁板綍鏁�?
 		String rows = request.getParameter("rows");
-	
 		String condition = " where 1=1 ";
 		if(qname!=null&&!qname.equals("")&&!qname.equalsIgnoreCase("null")){
 			condition += " and name like '%"+qname+"%'";
@@ -125,14 +123,9 @@ public class MovieTypeController {
 		if(qendDate!=null&&!qendDate.equals("")) {
 			condition += " and birthday <= '"+qendDate+"'";
 		}
-
-		//褰撳墠椤�?
 		int sp = 1;
-		//鎬昏褰曟暟
 		int totals = MovieTypeService.getTotals(MovieType.class);
-		//姣忛〉璁板綍鏁�
 		int pageSize = Integer.parseInt(rows);
-		//鎬婚〉鏁�?
 		int pageCounts = totals/pageSize;
 		if(totals%pageSize!=0){
 			pageCounts++;
@@ -164,70 +157,6 @@ public class MovieTypeController {
 			e.printStackTrace();
 		}
 	}
-//	@RequestMapping("/saveRole")
-//	public void saveRole(String uids,String rids) {
-//		List<MovieTypeRole> list = new ArrayList<>();
-//		MovieTypeRoleDao.deleteMovieTypeRolesByUids(uids);
-//		for(String uid:uids.split(",")) {
-//			for(String rid:rids.split(",")) {
-//				MovieTypeRole MovieTypeRole = new MovieTypeRole();
-//				MovieTypeRole.setUid(Integer.parseInt(uid));
-//				MovieTypeRole.setRid(Integer.parseInt(rid));
-//				list.add(MovieTypeRole);
-//			}
-//		}JSONObject jo = new JSONObject();
-//		PrintWriter out = null;
-//		try {
-//			out = response.getWriter();
-//			addMore(list);
-//			jo.put("state", 0);
-//			jo.put("msg", "分配成功");
-//		}catch(Exception e) {
-//			jo.put("state", -1);
-//			jo.put("msg", "分配失败"+e.getMessage());
-//		}finally {
-//			String str = JSON.toJSONString(jo);
-//			System.out.println(str);
-//			out.write(str);
-//			out.flush();
-//			out.close();
-//		}
-//		
-//	}
-//	@RequestMapping("/getOwnerRoles")
-//	public void getOwnerRoles(String uids) {
-//		try {
-//			PrintWriter out = response.getWriter();
-//			RoleDao dao = new RoleDaoImpl();
-//			List<Role> list = dao.queryAllRolesByUids(uids);
-//			String str = JSON.toJSONString(list);
-//			System.out.println(str);
-//			out.write(str);
-//			out.flush();
-//			out.close();
-//		}catch(Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
-	/*@RequestMapping("/queryAll")
-	public void queryAll() {
-		List<MovieType>list=MovieTypeService.queryAll(MovieType.class);
-		try {
-			PrintWriter out = response.getWriter();
-			String json = JSON.toJSONString(list);
-			System.out.println(json);
-			out.write(json);
-			out.flush();
-			out.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}*/
-	/**
-	 * 澶勭悊鍙傛暟涓烘棩鏈熸牸寮�
-	 * @param binder
-	 */
 	@InitBinder
     public void initBinder(ServletRequestDataBinder binder){
         binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true));

@@ -96,10 +96,10 @@
 							<li><a href="#">剧情</a></li>
 							<li><a href="#">恐怖</a></li>
 							<li><a href="#">动作</a></li>
-							<li><a href="#">战争</a></li>
+							<li><a href="#">音乐</a></li>
 							<li><a href="#">奇幻</a></li>
-							<li><a href="#">古装</a></li>
-							<li><a href="#">历史</a></li>
+							<li><a href="#">科幻</a></li>
+							<li><a href="#">家庭</a></li>
 							<li><a href="#"></a></li>
 							<li><a href="#"></a></li>
 							<li><a href="#"></a></li>

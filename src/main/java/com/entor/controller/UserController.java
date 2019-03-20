@@ -3,7 +3,6 @@ package com.entor.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -50,10 +49,10 @@ public class UserController {
 			out = response.getWriter();
 			UserService.add(User);
 			jo.put("state", 0);
-			jo.put("msg", "�����ɹ�");
+			jo.put("msg", "新增成功");
 		}catch(Exception e) {
 			jo.put("state", -1);
-			jo.put("msg", "����ʧ��"+e.getMessage());
+			jo.put("msg", "新增失败"+e.getMessage());
 		}finally {
 			String str = JSON.toJSONString(jo);
 			System.out.println(str);
@@ -70,10 +69,10 @@ public class UserController {
 			out = response.getWriter();
 			UserService.deleteMore(User.class,ids);
 			jo.put("state", 0);
-			jo.put("msg", "ɾ���ɹ�");
+			jo.put("msg", "删除成功");
 		}catch(Exception e) {
 			jo.put("state", -1);
-			jo.put("msg", "ɾ��ʧ��"+e.getMessage());
+			jo.put("msg", "删除失败"+e.getMessage());
 		}finally {
 			String str = JSON.toJSONString(jo);
 			System.out.println(str);
@@ -91,10 +90,10 @@ public class UserController {
 
 			UserService.update(User);
 			jo.put("state", 0);
-			jo.put("msg", "�޸ĳɹ�");
+			jo.put("msg", "修改成功");
 		}catch(Exception e) {
 			jo.put("state", -1);
-			jo.put("msg", "�޸�ʧ��"+e.getMessage());
+			jo.put("msg", "修改失败"+e.getMessage());
 		}finally {
 			String str = JSON.toJSONString(jo);
 			System.out.println(str);
@@ -111,7 +110,6 @@ public class UserController {
 		String qsex = request.getParameter("qsex");
 		String qbeginDate = request.getParameter("qbeginDate");
 		String qendDate = request.getParameter("qendDate");
-		//鑾峰彇姣忛�?�鏄剧ず璁板綍鏁�?
 		String rows = request.getParameter("rows");
 	
 		String condition = " where 1=1 ";
@@ -130,14 +128,9 @@ public class UserController {
 		if(qendDate!=null&&!qendDate.equals("")) {
 			condition += " and birthday <= '"+qendDate+"'";
 		}
-
-		//褰撳墠椤�?
 		int sp = 1;
-		//鎬昏褰曟暟
 		int totals = UserService.getTotals(User.class);
-		//姣忛〉璁板綍鏁�
 		int pageSize = Integer.parseInt(rows);
-		//鎬婚〉鏁�?
 		int pageCounts = totals/pageSize;
 		if(totals%pageSize!=0){
 			pageCounts++;
@@ -179,10 +172,6 @@ public class UserController {
         return "login";
     }
 
-	/**
-	 * 澶勭悊鍙傛暟涓烘棩鏈熸牸寮�
-	 * @param binder
-	 */
 	@InitBinder
     public void initBinder(ServletRequestDataBinder binder){
         binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true));

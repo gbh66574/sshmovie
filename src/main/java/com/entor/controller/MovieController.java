@@ -28,6 +28,7 @@ import com.entor.dao.MovieDao;
 import com.entor.entity.Movie;
 
 import com.entor.service.MovieService;
+import com.entor.vo.MovieVo;
 
 @Controller
 @RequestMapping("/Movie")
@@ -45,10 +46,10 @@ public class MovieController {
 			out = response.getWriter();
 			MovieService.add(Movie);
 			jo.put("state", 0);
-			jo.put("msg", "�����ɹ�");
+			jo.put("msg", "新增成功");
 		}catch(Exception e) {
 			jo.put("state", -1);
-			jo.put("msg", "����ʧ��"+e.getMessage());
+			jo.put("msg", "新增失败"+e.getMessage());
 		}finally {
 			String str = JSON.toJSONString(jo);
 			System.out.println(str);
@@ -65,10 +66,10 @@ public class MovieController {
 			out = response.getWriter();
 			MovieService.deleteMore(Movie.class,ids);
 			jo.put("state", 0);
-			jo.put("msg", "ɾ���ɹ�");
+			jo.put("msg", "删除成功");
 		}catch(Exception e) {
 			jo.put("state", -1);
-			jo.put("msg", "ɾ��ʧ��"+e.getMessage());
+			jo.put("msg", "删除失败"+e.getMessage());
 		}finally {
 			String str = JSON.toJSONString(jo);
 			System.out.println(str);
@@ -86,10 +87,10 @@ public class MovieController {
 
 			MovieService.update(Movie);
 			jo.put("state", 0);
-			jo.put("msg", "�޸ĳɹ�");
+			jo.put("msg", "修改成功");
 		}catch(Exception e) {
 			jo.put("state", -1);
-			jo.put("msg", "�޸�ʧ��"+e.getMessage());
+			jo.put("msg", "修改失败"+e.getMessage());
 		}finally {
 			String str = JSON.toJSONString(jo);
 			System.out.println(str);
@@ -106,7 +107,6 @@ public class MovieController {
 		String qsex = request.getParameter("qsex");
 		String qbeginDate = request.getParameter("qbeginDate");
 		String qendDate = request.getParameter("qendDate");
-		//鑾峰彇姣忛�?�鏄剧ず璁板綍鏁�?
 		String rows = request.getParameter("rows");
 	
 		String condition = " where 1=1 ";
@@ -125,14 +125,9 @@ public class MovieController {
 		if(qendDate!=null&&!qendDate.equals("")) {
 			condition += " and birthday <= '"+qendDate+"'";
 		}
-
-		//褰撳墠椤�?
 		int sp = 1;
-		//鎬昏褰曟暟
 		int totals = MovieService.getTotals(Movie.class);
-		//姣忛〉璁板綍鏁�
 		int pageSize = Integer.parseInt(rows);
-		//鎬婚〉鏁�?
 		int pageCounts = totals/pageSize;
 		if(totals%pageSize!=0){
 			pageCounts++;
@@ -148,7 +143,7 @@ public class MovieController {
 		if(sp<1){
 			sp = 1;
 		}
-		List<Movie> list =MovieService.queryByPage(Movie.class, sp, pageSize);
+		List<MovieVo> list =MovieService.aqueryByPage(sp, pageSize);
 		try {
 			PrintWriter out = response.getWriter();
 			JSONObject jo = new JSONObject();
@@ -164,70 +159,7 @@ public class MovieController {
 			e.printStackTrace();
 		}
 	}
-//	@RequestMapping("/saveRole")
-//	public void saveRole(String uids,String rids) {
-//		List<MovieRole> list = new ArrayList<>();
-//		MovieRoleDao.deleteMovieRolesByUids(uids);
-//		for(String uid:uids.split(",")) {
-//			for(String rid:rids.split(",")) {
-//				MovieRole MovieRole = new MovieRole();
-//				MovieRole.setUid(Integer.parseInt(uid));
-//				MovieRole.setRid(Integer.parseInt(rid));
-//				list.add(MovieRole);
-//			}
-//		}JSONObject jo = new JSONObject();
-//		PrintWriter out = null;
-//		try {
-//			out = response.getWriter();
-//			addMore(list);
-//			jo.put("state", 0);
-//			jo.put("msg", "分配成功");
-//		}catch(Exception e) {
-//			jo.put("state", -1);
-//			jo.put("msg", "分配失败"+e.getMessage());
-//		}finally {
-//			String str = JSON.toJSONString(jo);
-//			System.out.println(str);
-//			out.write(str);
-//			out.flush();
-//			out.close();
-//		}
-//		
-//	}
-//	@RequestMapping("/getOwnerRoles")
-//	public void getOwnerRoles(String uids) {
-//		try {
-//			PrintWriter out = response.getWriter();
-//			RoleDao dao = new RoleDaoImpl();
-//			List<Role> list = dao.queryAllRolesByUids(uids);
-//			String str = JSON.toJSONString(list);
-//			System.out.println(str);
-//			out.write(str);
-//			out.flush();
-//			out.close();
-//		}catch(Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
-	/*@RequestMapping("/queryAll")
-	public void queryAll() {
-		List<Movie>list=MovieService.queryAll(Movie.class);
-		try {
-			PrintWriter out = response.getWriter();
-			String json = JSON.toJSONString(list);
-			System.out.println(json);
-			out.write(json);
-			out.flush();
-			out.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}*/
-	/**
-	 * 澶勭悊鍙傛暟涓烘棩鏈熸牸寮�
-	 * @param binder
-	 */
+
 	@InitBinder
     public void initBinder(ServletRequestDataBinder binder){
         binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true));

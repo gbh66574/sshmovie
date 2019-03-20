@@ -4,18 +4,25 @@
 <mapper namespace="User">
 
 	<insert id="add" parameterType="User">
-		insert into User(name)
-		values(#{name})
+		insert into User(username,password,name,sex,dress,phone,qq,createTime)
+		values(#{username},#{password},#{password},#{name},#{sex},#{dress},#{phone},#{qq},#{createTime})
 	</insert>
 	<insert id="addMore">
-	insert into User(name)values
+	insert into User(username,password,name,sex,dress,phone,qq,createTime)values
 	<foreach collection="list" item="s" separator=",">
-	(#{s.name})
+	(#{s.username},#{s.password},#{s.password},#{s.name},#{s.sex},#{s.dress},#{s.phone},#{s.qq},#{s.createTime})
 	</foreach>
 	</insert>
 	<update id="update" parameterType="User">
 		update User set
+		username=#{username}
+		password=#{password}
 		name=#{name}
+		sex=#{sex}
+		dress=#{dress}
+		phone=#{phone}
+		qq=#{qq}
+		createTime=#{createTime}
 		where id=#{id}
 	</update>
 	<select id="queryById" parameterType="int" resultType="User">

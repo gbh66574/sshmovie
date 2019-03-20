@@ -1,12 +1,13 @@
-package com.entor.entity;
+package com.entor.vo;
 
-public class Movie {
+public class MovieVo {
 	private int id;
 	private String name;
 	private String type;
 	private String content;
 	private String price;
 	private String photo;
+	private String mname;
 	public int getId() {
 		return id;
 	}
@@ -43,12 +44,18 @@ public class Movie {
 	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
+	public String getMname() {
+		return mname;
+	}
+	public void setMname(String mname) {
+		this.mname = mname;
+	}
 	@Override
 	public String toString() {
-		return "Movie [id=" + id + ", name=" + name + ", type=" + type + ", content=" + content + ", price=" + price
-				+ ", photo=" + photo + "]";
+		return "MovieVo [id=" + id + ", name=" + name + ", type=" + type + ", content=" + content + ", price=" + price
+				+ ", photo=" + photo + ", mname=" + mname + "]";
 	}
-	public Movie(int id, String name, String type, String content, String price, String photo) {
+	public MovieVo(int id, String name, String type, String content, String price, String photo, String mname) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -56,8 +63,9 @@ public class Movie {
 		this.content = content;
 		this.price = price;
 		this.photo = photo;
+		this.mname = mname;
 	}
-	public Movie() {
+	public MovieVo() {
 		super();
 	}
 	
